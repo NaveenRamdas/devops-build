@@ -42,15 +42,15 @@ pipeline {
             }
         }
     }
-    post {
-        always {
-            // Clean up old Docker images
-            script {
-                docker.image("${DEV_REPO}:${env.BUILD_ID}").remove()
-                if (env.BRANCH_NAME == 'main') {
-                    docker.image("${PROD_REPO}:${env.BUILD_ID}").remove()
-                }
-            }
-        }
-    }
+    // post {
+    //     always {
+    //         // Clean up old Docker images
+    //         script {
+    //             docker.image("${DEV_REPO}:${env.BUILD_ID}").remove()
+    //             if (env.BRANCH_NAME == 'main') {
+    //                 docker.image("${PROD_REPO}:${env.BUILD_ID}").remove()
+    //             }
+    //         }
+    //     }
+    // }
 }
