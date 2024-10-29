@@ -25,7 +25,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('', 'docker_id_some') {
-                        def repo = env.BRANCH_NAME == 'dev' ? DEV_REPO : PROD_REPO
+                        def repo = env.BRANCH_NAME == 'main' ? DEV_REPO : PROD_REPO
                         def image = docker.image("${repo}:${env.BUILD_ID}")
                         image.push()
                     }
