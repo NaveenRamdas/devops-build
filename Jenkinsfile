@@ -13,7 +13,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Pull the latest code
-                git branch: "${env.BRANCH_NAME}", url: 'https://github.com/NaveenRamdas/devops-build.git'
+                git branch: "development", url: 'https://github.com/NaveenRamdas/devops-build.git'
             }
         }
         stage('Build Docker Image') {
