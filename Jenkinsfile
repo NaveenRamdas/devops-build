@@ -8,7 +8,9 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Pull the latest code
+                script {
+                    echo "Branch: ${env.BRANCH_NAME}"
+                }
                 git branch: "${env.BRANCH_NAME}", url: 'https://github.com/NaveenRamdas/devops-build.git'
             }
         }
@@ -25,7 +27,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('', 'docker_id_some') {
-                        def repo = env.BRANCH_NAME == 'dev' ? DEV_REPO : PROD_REPO
+                        def repo = env.BRANCH_NAME == 'development' ? DEV_REPO : PROD_REPO
                         def image = docker.image("${repo}:${env.BUILD_ID}")
                         image.push()
                     }
@@ -42,15 +44,4 @@ pipeline {
             }
         }
     }
-    // post {
-    //     always {
-    //         // Clean up old Docker images
-    //         script {
-    //             docker.image("${DEV_REPO}:${env.BUILD_ID}").remove()
-    //             if (env.BRANCH_NAME == 'development') {
-    //                 docker.image("${PROD_REPO}:${env.BUILD_ID}").remove()
-    //             }
-    //         }
-    //     }
-    // }
 }
